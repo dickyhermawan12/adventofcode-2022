@@ -40,7 +40,7 @@ int getSum(int arr[])
 
 int main()
 {
-  std::ifstream input("day1.txt");
+  std::ifstream input("input/day1.txt");
   std::string line;
   int sum = 0;
   int arr[3] = {0, 0, 0};

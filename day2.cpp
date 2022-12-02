@@ -68,7 +68,7 @@ int getScorePartTwo(char first, char result)
 
 int main()
 {
-  std::ifstream input("day2.txt");
+  std::ifstream input("input/day2.txt");
   std::string line;
   int total[2] = {0};
 
