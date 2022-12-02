@@ -61,12 +61,7 @@ int main()
     sum += calorie;
   }
 
-  for (int i = 0; i < 3; i++)
-  {
-    std::cout << arr[i] << " ";
-  }
-
-  std::cout << '\n';
+  std::cout << arr[0] << std::endl;
   std::cout << getSum(arr) << std::endl;
 
   return 0;
