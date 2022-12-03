@@ -10,7 +10,7 @@ struct Node
 };
 
 /**
- * @brief  Create a new node.
+ * @brief  Creates a new node.
  *
  * @param data  The character to insert
  * @return  The root of the binary search tree
@@ -88,8 +88,10 @@ int priority(char data)
   {
   case 'a' ... 'z':
     return data - 'a' + 1;
-  default:
+  case 'A' ... 'Z':
     return data - 'A' + 27;
+  default:
+    return 0;
   }
 }
 
