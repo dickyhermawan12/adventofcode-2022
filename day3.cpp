@@ -9,6 +9,26 @@ struct Node
   Node *right;
 };
 
+// record of binary search tree of previous lines
+struct PreviousData
+{
+  Node *prev;
+  std::string sameChars;
+  int cycle;
+
+  PreviousData()
+  {
+    deleteData();
+  }
+
+  void deleteData()
+  {
+    prev = nullptr;
+    sameChars = "";
+    cycle = 1;
+  }
+};
+
 /**
  * @brief  Creates a new node.
  *
@@ -111,26 +131,6 @@ char check(Node *node, std::string str)
   }
   return 0;
 }
-
-// record of binary search tree of previous lines
-struct PreviousData
-{
-  Node *prev;
-  std::string sameChars;
-  int cycle;
-
-  PreviousData()
-  {
-    deleteData();
-  }
-
-  void deleteData()
-  {
-    prev = nullptr;
-    sameChars = "";
-    cycle = 1;
-  }
-};
 
 int main()
 {

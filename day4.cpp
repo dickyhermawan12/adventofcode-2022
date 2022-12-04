@@ -9,7 +9,8 @@ int main()
   std::ifstream file("input/day4.txt");
   std::string str;
 
-  while (getline(file, str)) {
+  while (getline(file, str))
+  {
     // split the string into two parts by comma
     std::string first = str.substr(0, str.find(','));
     std::string second = str.substr(str.find(',') + 1);
