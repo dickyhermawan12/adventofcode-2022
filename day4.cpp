@@ -31,7 +31,6 @@ int main()
       count2++;
   }
 
-  // print the first and second part
   std::cout << count1 << std::endl;
   std::cout << count2 << std::endl;
 
