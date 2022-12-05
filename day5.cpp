@@ -30,7 +30,6 @@ void reverseStacks(std::map<int, std::stack<char>> &charMap)
 {
   for (auto it = charMap.begin(); it != charMap.end(); ++it)
   {
-    std::stack<char> &stack = it->second;
     std::stack<char> temp;
     while (!it->second.empty())
     {
@@ -75,7 +74,7 @@ int main()
 
   while (getline(file, str))
   {
-    if (str.length() == 0)
+    if (str.empty())
       continue;
 
     std::stringstream ss(str);
@@ -102,8 +101,8 @@ int main()
     }
 
     // pop the crane back into the stack
-    for (int i = crane.size() - 1; i >= 0; i--)
-      charStack2[nums[2]].push(crane[i]);
+    for (auto it = crane.rbegin(); it != crane.rend(); ++it)
+      charStack2[nums[2]].push(*it);
   }
 
   printStackTop(charStack);

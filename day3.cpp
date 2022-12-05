@@ -18,10 +18,10 @@ struct PreviousData
 
   PreviousData()
   {
-    deleteData();
+    purge();
   }
 
-  void deleteData()
+  void purge()
   {
     prev = nullptr;
     sameChars = "";
@@ -171,7 +171,7 @@ int main()
     case 3:
       previousData.prev = createTree(previousData.sameChars);
       sum2 += priority(check(previousData.prev, line));
-      previousData.deleteData();
+      previousData.purge();
       break;
     }
   }
