@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
+#include <map>
 #include <vector>
 #include <cctype>
 
@@ -11,12 +12,12 @@
  * @param charStack  The array of stacks
  * @param str        The string to be processed
  */
-void initStacks(std::stack<char> charStack[], std::string str)
+void initStacks(std::map<int, std::stack<char>> &charMap, std::string str)
 {
   for (int i = 0; i < str.length(); i++)
   {
     if (isalpha(str[i]))
-      charStack[i / 4 + 1].push(str[i]);
+      charMap[i / 4 + 1].push(str[i]);
   }
 }
 
@@ -25,17 +26,18 @@ void initStacks(std::stack<char> charStack[], std::string str)
  *
  * @param charStack  The array of stacks
  */
-void reverseStacks(std::stack<char> charStack[])
+void reverseStacks(std::map<int, std::stack<char>> &charMap)
 {
-  for (int i = 0; i < 10; i++)
+  for (auto it = charMap.begin(); it != charMap.end(); ++it)
   {
+    std::stack<char> &stack = it->second;
     std::stack<char> temp;
-    while (!charStack[i].empty())
+    while (!it->second.empty())
     {
-      temp.push(charStack[i].top());
-      charStack[i].pop();
+      temp.push(it->second.top());
+      it->second.pop();
     }
-    charStack[i] = temp;
+    it->second = temp;
   }
 }
 
@@ -44,13 +46,10 @@ void reverseStacks(std::stack<char> charStack[])
  *
  * @param charStack  The array of stacks
  */
-void printStackTop(std::stack<char> charStack[])
+void printStackTop(std::map<int, std::stack<char>> &charMap)
 {
-  for (int i = 0; i < 10; i++)
-  {
-    if (!charStack[i].empty())
-      std::cout << charStack[i].top();
-  }
+  for (auto it = charMap.begin(); it != charMap.end(); ++it)
+    std::cout << it->second.top();
   std::cout << std::endl;
 }
 
@@ -58,8 +57,8 @@ int main()
 {
   std::ifstream file("input/day5.txt");
   std::string str;
-  std::stack<char> charStack[10];
-  std::stack<char> charStack2[10];
+  std::map<int, std::stack<char>> charStack;
+  std::map<int, std::stack<char>> charStack2;
 
   while (getline(file, str))
   {
@@ -87,7 +86,7 @@ int main()
     while (ss >> temp)
     {
       if (isdigit(temp[0]))
-        nums.push_back(stoi(temp));
+        nums.emplace_back(stoi(temp));
     }
 
     for (int i = 0; i < nums[0]; i++)
@@ -98,7 +97,7 @@ int main()
       charStack[nums[2]].push(c);
 
       // part 2 operation
-      crane.push_back(charStack2[nums[1]].top());
+      crane.emplace_back(charStack2[nums[1]].top());
       charStack2[nums[1]].pop();
     }
 
