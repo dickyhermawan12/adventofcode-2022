@@ -22,34 +22,53 @@ struct Rope
   std::vector<Coord> *body;
 };
 
-void changeSegmentPos(Coord &h, Coord &t)
+/**
+ * @brief  Moves the segment of the rope relative to the previous segment
+ *
+ * @param p  The previous segment of the rope
+ * @param s  The segment to move
+ */
+void changeSegmentPos(Coord &p, Coord &s)
 {
-  int diff[2] = {h.x - t.x, h.y - t.y};
+  int diff[2] = {p.x - s.x, p.y - s.y};
   if (abs(diff[0]) < 2 && abs(diff[1]) < 2)
     return;
 
-  if (h.x > t.x)
-    t.x++;
-  else if (h.x < t.x)
-    t.x--;
-  if (h.y > t.y)
-    t.y++;
-  else if (h.y < t.y)
-    t.y--;
+  if (p.x > s.x)
+    s.x++;
+  else if (p.x < s.x)
+    s.x--;
+  if (p.y > s.y)
+    s.y++;
+  else if (p.y < s.y)
+    s.y--;
 }
 
-void changeBodyPos(Rope &s)
+/**
+ * @brief  Moves the body of the rope relative to the head
+ *
+ * @param r  The rope to move
+ */
+void changeBodyPos(Rope &r)
 {
-  for (int i = 0; i < s.body->size(); i++)
+  for (int i = 0; i < r.body->size(); i++)
   {
     if (i == 0)
-      changeSegmentPos(s.head, s.body->data()[i]);
+      changeSegmentPos(r.head, r.body->data()[i]);
     else
-      changeSegmentPos(s.body->data()[i - 1], s.body->data()[i]);
+      changeSegmentPos(r.body->data()[i - 1], r.body->data()[i]);
   }
 }
 
-std::set<Coord> *move(Rope &s, char dir, int amount)
+/**
+ * @brief  Moves the head of the rope and returns the new coordinates of the tail
+ *
+ * @param r  The rope to move
+ * @param dir  The direction to move in
+ * @param amount  The amount to move
+ * @return  The path of the tail
+ */
+std::set<Coord> *move(Rope &r, char dir, int amount)
 {
   std::set<Coord> *newCoords = new std::set<Coord>();
   for (int i = 0; i < amount; i++)
@@ -57,20 +76,20 @@ std::set<Coord> *move(Rope &s, char dir, int amount)
     switch (dir)
     {
     case 'U':
-      s.head.y++;
+      r.head.y++;
       break;
     case 'D':
-      s.head.y--;
+      r.head.y--;
       break;
     case 'L':
-      s.head.x--;
+      r.head.x--;
       break;
     case 'R':
-      s.head.x++;
+      r.head.x++;
       break;
     }
-    changeBodyPos(s);
-    newCoords->insert(s.body->data()[s.body->size() - 1]);
+    changeBodyPos(r);
+    newCoords->insert(r.body->data()[r.body->size() - 1]);
   }
   return newCoords;
 }
@@ -94,7 +113,7 @@ int main()
     tCoords2.insert(coords.begin(), coords.end());
   }
 
-  std::cout << "Number of unique coordinates: " << tCoords1.size() << std::endl;
-  std::cout << "Number of unique coordinates: " << tCoords2.size() << std::endl;
+  std::cout << tCoords1.size() << std::endl;
+  std::cout << tCoords2.size() << std::endl;
   return 0;
 }
